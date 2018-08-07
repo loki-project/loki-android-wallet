@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class AppPreferences {
     private static final String DEFAULT_DAEMONLIST_MAINNET =
-            "doopool.xyz:22020;pool.loki.hashvault.pro;daemons.cryptopool.space;node.supportloki.com";
+            "doopool.xyz:22020;pool.loki.hashvault.pro;daemons.cryptopool.space;node.loki-pool.com:18081;node.lokipool.cloud:18081;"
 
     private static final String DEFAULT_DAEMONLIST_STAGENET =
             "nari.blockfoundry.org:10610";
