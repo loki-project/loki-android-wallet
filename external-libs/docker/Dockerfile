@@ -1,7 +1,6 @@
 FROM debian:jessie
 
 RUN apt-get update && apt-get install -y unzip automake build-essential curl cmake file pkg-config git python libtool
-
 WORKDIR /opt/android
 
 ENV ANDROID_NDK_REVISION 17b
@@ -21,7 +20,7 @@ RUN ndk/build/tools/make_standalone_toolchain.py --api 21 --stl=libc++ --arch ar
     && ndk/build/tools/make_standalone_toolchain.py --api 21 --stl=libc++ --arch x86_64 --install-dir /opt/android/tool/x86_64
 
 ## Building OpenSSL
-RUN git clone https://github.com/m2049r/android-openssl.git \
+RUN git clone https://github.com/m2049r/android-openssl.git --depth=1 \
     && curl -L -s -O https://github.com/openssl/openssl/archive/OpenSSL_1_0_2l.tar.gz \
     && cd android-openssl \
     && tar xfz ../OpenSSL_1_0_2l.tar.gz \
@@ -66,9 +65,21 @@ RUN cd boost_${BOOST_VERSION} \
     && ln -sf ../include /opt/android/build/boost/x86 \
     && ln -sf ../include /opt/android/build/boost/x86_64
 
-## Building Loki
+# Building Loki from the latest commit on Android branch, this should be kept up to date with master
+# with the necessary fixes by crtlib and m2049r to build for mobile.
+ARG LOKI_COMMIT_HASH=51520474fd05267b655048be46118f01663d11ea
 RUN cd /opt/android \
-    && git clone -b loki_wallet --recursive https://github.com/crtlib/loki.git \
+    && git clone -b LokiAndroidWallet https://github.com/doy-lee/loki.git --recursive --depth=1 \
     && cd loki \
+    && test `git rev-parse HEAD` = ${LOKI_COMMIT_HASH} || exit 1 \
     && mkdir -p build/release \
     && ./build-all-arch.sh
+
+# Uncomment this section to use loki from the docker directory if you want to
+# easily build a custom version not depending on the specified branch above and
+# comment out the section above that pulls from github.
+# ADD loki /opt/android/loki
+# RUN cd /opt/android/loki \
+#      && rm -rf build \
+#      && mkdir -p build/release \
+#      && ./build-all-arch.sh
