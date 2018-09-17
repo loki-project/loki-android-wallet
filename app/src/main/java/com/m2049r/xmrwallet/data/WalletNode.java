@@ -70,7 +70,7 @@ public class WalletNode {
                     port = 22023;
                     break;
                 case NetworkType_Testnet:
-                    port = 38151;
+                    port = 38157;
                     break;
                 case NetworkType_Stagenet:
                     port = 38154;
