@@ -63,13 +63,6 @@
                     android:orientation="horizontal"
                     android:visibility="invisible">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:paddingTop="8dp"
-                        android:src="@drawable/lunther_big" />
-
                     <TextView
                         android:id="@+id/tvXmrTo"
                         style="@style/MoneroText.Info"
@@ -79,8 +72,7 @@
                         android:layout_marginRight="8dp"
                         android:gravity="start|top"
                         android:singleLine="false"
-                        android:textSize="18sp"
-                        tools:text="@string/info_xmrto" />
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
