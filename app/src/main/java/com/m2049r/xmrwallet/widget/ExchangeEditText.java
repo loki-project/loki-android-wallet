@@ -66,17 +66,20 @@ public class ExchangeEditText extends LinearLayout {
             shakeExchangeField();
             return false;
         }
-        boolean ok = true;
+
         String nativeAmount = getNativeAmount();
-        try {
-            double amount = Double.parseDouble(nativeAmount);
-            if ((amount < min) || (amount > max)) {
+        boolean ok = nativeAmount != null;
+        if (nativeAmount != null) {
+            try {
+                double amount = Double.parseDouble(nativeAmount);
+                if ((amount < min) || (amount > max)) {
+                    ok = false;
+                }
+            } catch (NumberFormatException ex) {
+                // this cannot be
+                Timber.e(ex.getLocalizedMessage());
                 ok = false;
             }
-        } catch (NumberFormatException ex) {
-            // this cannot be
-            Timber.e(ex.getLocalizedMessage());
-            ok = false;
         }
         if (!ok) {
             shakeAmountField();

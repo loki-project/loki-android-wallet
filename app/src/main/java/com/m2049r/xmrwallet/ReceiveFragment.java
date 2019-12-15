@@ -465,7 +465,7 @@ public class ReceiveFragment extends Fragment {
     }
 
     public Bitmap generate(String text, int width, int height) {
-        if ((width <= 0) || (height <= 0)) return null;
+        if ((width <= 0) || (height <= 0) || text.isEmpty()) return null;
         Map<EncodeHintType, Object> hints = new HashMap<>();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
