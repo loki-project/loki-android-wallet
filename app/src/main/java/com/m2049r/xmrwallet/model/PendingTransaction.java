@@ -34,24 +34,35 @@ public class PendingTransaction {
     }
 
     public enum Priority {
-        Priority_Default(0),
-        Priority_Low(1),
-        Priority_Medium(2),
-        Priority_High(3),
-        Priority_Last(4);
+        Automatic(0),
+        Slow(1),
+        Normal(2),
+        Fast(3),
+        Fastest(4),
+        Blink(0x626c6e6b);
 
         public static Priority fromInteger(int n) {
             switch (n) {
-                case 0:
-                    return Priority_Default;
                 case 1:
-                    return Priority_Low;
+                    return Slow;
                 case 2:
-                    return Priority_Medium;
+                    return Normal;
                 case 3:
-                    return Priority_High;
+                    return Fast;
+                case 4:
+                    return Fastest;
+                case 0x626c6e6b:
+                    return Blink;
             }
             return null;
+        }
+
+        public static Priority fromString(String string) {
+            try {
+                return Priority.valueOf(string);
+            } catch (Exception e) {
+                return Automatic;
+            }
         }
 
         public int getValue() {

@@ -20,19 +20,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.m2049r.xmrwallet.R;
 import com.m2049r.xmrwallet.data.BarcodeData;
 import com.m2049r.xmrwallet.data.TxData;
+import com.m2049r.xmrwallet.model.PendingTransaction;
 import com.m2049r.xmrwallet.model.Wallet;
 import com.m2049r.xmrwallet.util.Helper;
 import com.m2049r.xmrwallet.widget.ExchangeEditText;
 
+import java.util.Arrays;
+import java.util.List;
+
 import timber.log.Timber;
 
-public class SendAmountWizardFragment extends SendWizardFragment {
+public class SendAmountWizardFragment extends SendWizardFragment implements AdapterView.OnItemSelectedListener {
 
     public static SendAmountWizardFragment newInstance(Listener listener) {
         SendAmountWizardFragment instance = new SendAmountWizardFragment();
@@ -59,6 +66,9 @@ public class SendAmountWizardFragment extends SendWizardFragment {
     private ExchangeEditText etAmount;
     private View rlSweep;
     private ImageButton ibSweep;
+    private Spinner prioritySpinner;
+    private PendingTransaction.Priority priority = PendingTransaction.Priority.Automatic;
+    private List<String> priorities;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,6 +83,7 @@ public class SendAmountWizardFragment extends SendWizardFragment {
         tvFunds = view.findViewById(R.id.tvFunds);
         etAmount = view.findViewById(R.id.etAmount);
         rlSweep = view.findViewById(R.id.rlSweep);
+        prioritySpinner = view.findViewById(R.id.prioritySpinner);
 
         view.findViewById(R.id.ivSweep).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +101,23 @@ public class SendAmountWizardFragment extends SendWizardFragment {
             }
         });
 
+        setupPrioritySpinner();
         etAmount.requestFocus();
         return view;
+    }
+
+    private void setupPrioritySpinner() {
+        priorities = Arrays.asList(
+                PendingTransaction.Priority.Automatic.toString(),
+                PendingTransaction.Priority.Slow.toString(),
+                PendingTransaction.Priority.Normal.toString(),
+                PendingTransaction.Priority.Fast.toString(),
+                PendingTransaction.Priority.Blink.toString()
+        );
+        ArrayAdapter<String> priorityArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, priorities);
+        priorityArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        prioritySpinner.setAdapter(priorityArrayAdapter);
+        prioritySpinner.setOnItemSelectedListener(this);
     }
 
     private boolean spendAllMode = false;
@@ -129,6 +155,9 @@ public class SendAmountWizardFragment extends SendWizardFragment {
                 }
             }
         }
+        if (sendListener != null) {
+            sendListener.getTxData().setPriority(priority);
+        }
         return true;
     }
 
@@ -160,4 +189,13 @@ public class SendAmountWizardFragment extends SendWizardFragment {
     long getTotalFunds() {
         return sendListener.getActivityCallback().getTotalFunds();
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String priorityString = priorities.get(position);
+        priority = PendingTransaction.Priority.fromString(priorityString);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) { }
 }

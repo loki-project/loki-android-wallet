@@ -337,7 +337,7 @@ public class SendAddressWizardFragment extends SendWizardFragment {
             txData.setDestinationAddress(etAddress.getEditText().getText().toString());
             txData.setPaymentId(etPaymentId.getEditText().getText().toString());
             txData.setUserNotes(new UserNotes(etNotes.getEditText().getText().toString()));
-            txData.setPriority(PendingTransaction.Priority.Priority_Default);
+            txData.setPriority(PendingTransaction.Priority.Automatic);
             txData.setMixin(SendFragment.MIXIN);
         }
         return true;

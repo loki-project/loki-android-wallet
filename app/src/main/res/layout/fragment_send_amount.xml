@@ -1,70 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvFunds"
-            style="@style/MoneroText.Funds"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/ibSweep"
-            android:gravity="center"
-            tools:text="Balance: 70.198276354123 LOKI" />
-
-        <ImageButton
-            android:id="@+id/ibSweep"
-            style="@style/MoneroLabel.NumPad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:src="@drawable/ic_all_inclusive_24dp"
-            android:visibility="visible" />
-    </RelativeLayout>
-
-    <com.m2049r.xmrwallet.widget.ExchangeEditText
-        android:id="@+id/etAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical" />
-
-    <RelativeLayout
-        android:id="@+id/rlSweep"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/ivSweep"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/tvSweep"
-            android:layout_alignParentTop="true"
-            android:padding="16dp"
-            android:src="@drawable/ic_all_inclusive_24dp" />
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvSweep"
-            style="@style/MoneroLabel.Heading.Donation"
+            <TextView
+                android:id="@+id/tvFunds"
+                style="@style/MoneroText.Funds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/ibSweep"
+                android:gravity="center"
+                tools:text="Balance: 70.198276354123 LOKI" />
+
+            <ImageButton
+                android:id="@+id/ibSweep"
+                style="@style/MoneroLabel.NumPad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:src="@drawable/ic_all_inclusive_24dp"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp">
+
+            <TextView
+                style="@style/MoneroText.Funds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/priority_label" />
+
+            <Spinner
+                android:id="@+id/prioritySpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries="@android:array/emailAddressTypes"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+
+        <com.m2049r.xmrwallet.widget.ExchangeEditText
+            android:id="@+id/etAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:text="@string/send_sweepall" />
-    </RelativeLayout>
-</LinearLayout>
+            android:orientation="vertical" />
+
+        <RelativeLayout
+            android:id="@+id/rlSweep"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/ivSweep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/tvSweep"
+                android:layout_alignParentTop="true"
+                android:padding="16dp"
+                android:src="@drawable/ic_all_inclusive_24dp" />
+
+            <TextView
+                android:id="@+id/tvSweep"
+                style="@style/MoneroLabel.Heading.Donation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="@string/send_sweepall" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
