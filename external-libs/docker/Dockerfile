@@ -97,12 +97,9 @@ RUN cd /opt/android/libsodium \
 
 # Building Loki from the latest commit on Android branch, this should be kept up to date with master
 # with the necessary fixes by crtlib and m2049r to build for mobile.
-ARG LOKI_COMMIT_HASH=71df36efc63f80733c76cb9e7a096c1ea1e31c12
 RUN cd /opt/android \
     && git clone -b android https://github.com/loki-project/loki.git --recursive --depth=1 \
     && cd loki \
-    && git checkout ${LOKI_COMMIT_HASH} . \
-    && test `git rev-parse HEAD` = ${LOKI_COMMIT_HASH} || exit 2\
     && mkdir -p build/release \
     && ./build-all-arch.sh
 
