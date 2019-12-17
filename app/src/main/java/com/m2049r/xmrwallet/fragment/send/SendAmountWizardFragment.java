@@ -108,11 +108,8 @@ public class SendAmountWizardFragment extends SendWizardFragment implements Adap
 
     private void setupPrioritySpinner() {
         priorities = Arrays.asList(
-                PendingTransaction.Priority.Automatic.toString(),
-                PendingTransaction.Priority.Slow.toString(),
-                PendingTransaction.Priority.Normal.toString(),
-                PendingTransaction.Priority.Fast.toString(),
-                PendingTransaction.Priority.Blink.toString()
+                PendingTransaction.Priority.Blink.toString(),
+                PendingTransaction.Priority.Slow.toString()
         );
         ArrayAdapter<String> priorityArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, priorities);
         priorityArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
