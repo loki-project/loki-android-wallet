@@ -67,7 +67,7 @@ public class SendAmountWizardFragment extends SendWizardFragment implements Adap
     private View rlSweep;
     private ImageButton ibSweep;
     private Spinner prioritySpinner;
-    private PendingTransaction.Priority priority = PendingTransaction.Priority.Automatic;
+    private PendingTransaction.Priority priority = PendingTransaction.Priority.Slow;
     private List<String> priorities;
 
     @Override
