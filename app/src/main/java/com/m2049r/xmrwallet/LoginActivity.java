@@ -87,7 +87,8 @@ public class LoginActivity extends BaseActivity
     private static final String NODES_PREFS_NAME = "nodes";
     private static final String PREF_DAEMON_STAGENET = "daemon_stagenet";
     private static final String PREF_DAEMON_MAINNET = "daemon_mainnet";
-    private static final String DEFAULT_DAEMONLIST_MAINNET = "doopool.xyz:22020;nodes.hashvault.pro:22023;imaginary.stream:22023";
+    private static final String DEFAULT_DAEMONLIST_MAINNET =
+        "doopool.xyz:22020;nodes.hashvault.pro:22023;imaginary.stream:22023;node.loki-pool.com:18081;public.loki.foundation:22023";
     private static final String DEFAULT_DAEMONLIST_STAGENET = "lokitestnet.com:38157/testnet";
 
     private NodeInfo node = null;
