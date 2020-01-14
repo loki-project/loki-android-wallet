@@ -79,8 +79,8 @@ RUN cd boost_${BOOST_VERSION} \
     && ln -sf ../include /opt/android/build/boost/x86_64
 
 # Sodium
-ARG SODIUM_VERSION=1.0.16
-ARG SODIUM_HASH=675149b9b8b66ff44152553fb3ebf9858128363d
+ARG SODIUM_VERSION=1.0.17
+ARG SODIUM_HASH=b732443c442239c2e0184820e9b23cca0de0828c
 RUN set -ex \
     && cd /opt/android \
     && git clone https://github.com/jedisct1/libsodium.git -b ${SODIUM_VERSION} --depth=1 \
@@ -94,6 +94,23 @@ RUN cd /opt/android/libsodium \
     && PATH=/opt/android/tool/arm64/aarch64-linux-android/bin:/opt/android/tool/arm64/bin:$PATH ; CC=clang CXX=clang++ CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./configure --prefix=/opt/android/build/libsodium/arm64 --host=aarch64-linux-android --enable-static --disable-shared && make && make install && make clean \
     && PATH=/opt/android/tool/x86/i686-linux-android/bin:/opt/android/tool/x86/bin:$PATH ; CC=clang CXX=clang++ CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./configure --prefix=/opt/android/build/libsodium/x86 --host=i686-linux-android --enable-static --disable-shared && make && make install && make clean \
     && PATH=/opt/android/tool/x86_64/x86_64-linux-android/bin:/opt/android/tool/x86_64/bin:$PATH ; CC=clang CXX=clang++ CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./configure --prefix=/opt/android/build/libsodium/x86_64 --host=x86_64-linux-android --enable-static --disable-shared && make && make install && make clean
+
+# ZMQ
+ARG ZMQ_VERSION=v4.3.1
+ARG ZMQ_HASH=2cb1240db64ce1ea299e00474c646a2453a8435b
+RUN set -ex \
+    && cd /opt/android \
+    && git clone https://github.com/zeromq/libzmq.git -b ${ZMQ_VERSION} --depth=1 \
+    && cd libzmq \
+    && test `git rev-parse HEAD` = ${ZMQ_HASH} || exit 1 \
+    && ./autogen.sh \
+
+## Building ZMQ
+RUN cd /opt/android/libzmq \
+    && PATH=/opt/android/tool/arm/arm-linux-androideabi/bin:/opt/android/tool/arm/bin:$PATH ; CC=clang CXX=clang++ CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./configure --prefix=/opt/android/build/libzmq/arm --host=arm-linux-androideabi --enable-static --disable-shared && make && make install && ldconfig && make clean \
+    && PATH=/opt/android/tool/arm64/aarch64-linux-android/bin:/opt/android/tool/arm64/bin:$PATH ; CC=clang CXX=clang++ CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./configure --prefix=/opt/android/build/libzmq/arm64 --host=aarch64-linux-android --enable-static --disable-shared && make && make install && ldconfig && make clean \
+    && PATH=/opt/android/tool/x86/i686-linux-android/bin:/opt/android/tool/x86/bin:$PATH ; CC=clang CXX=clang++ CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./configure --prefix=/opt/android/build/libzmq/x86 --host=i686-linux-android --enable-static --disable-shared && make && make install && ldconfig && make clean \
+    && PATH=/opt/android/tool/x86_64/x86_64-linux-android/bin:/opt/android/tool/x86_64/bin:$PATH ; CC=clang CXX=clang++ CFLAGS="-fPIC" CXXFLAGS="-fPIC" ./configure --prefix=/opt/android/build/libzmq/x86_64 --host=x86_64-linux-android --enable-static --disable-shared && make && make install && ldconfig && make clean
 
 # Building Loki from the latest commit on Android branch, this should be kept up to date with master
 # with the necessary fixes by crtlib and m2049r to build for mobile.
