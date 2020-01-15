@@ -22,9 +22,11 @@ public class PendingTransaction {
     }
 
     public long handle;
+    public boolean blink;
 
-    PendingTransaction(long handle) {
+    PendingTransaction(long handle, boolean blink) {
         this.handle = handle;
+        this.blink = blink;
     }
 
     public enum Status {
@@ -71,7 +73,7 @@ public class PendingTransaction {
     public native String getErrorString();
 
     // commit transaction or save to file if filename is provided.
-    public native boolean commit(String filename, boolean overwrite);
+    public native boolean commit(String filename, boolean overwrite, boolean blink);
 
     public native long getAmount();
 

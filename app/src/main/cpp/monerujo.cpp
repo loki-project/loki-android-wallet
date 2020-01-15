@@ -1269,12 +1269,12 @@ Java_com_m2049r_xmrwallet_model_PendingTransaction_getErrorString(JNIEnv *env, j
 // commit transaction or save to file if filename is provided.
 JNIEXPORT jboolean JNICALL
 Java_com_m2049r_xmrwallet_model_PendingTransaction_commit(JNIEnv *env, jobject instance,
-                                                          jstring filename, jboolean overwrite) {
+                                                          jstring filename, jboolean overwrite, jboolean blink) {
 
     const char *_filename = env->GetStringUTFChars(filename, NULL);
 
     Bitmonero::PendingTransaction *tx = getHandle<Bitmonero::PendingTransaction>(env, instance);
-    bool success = tx->commit(_filename, overwrite);
+    bool success = tx->commit(_filename, overwrite, blink);
 
     env->ReleaseStringUTFChars(filename, _filename);
     return static_cast<jboolean>(success);

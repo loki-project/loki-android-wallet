@@ -321,7 +321,7 @@ public class Wallet {
                                 accountIndex) :
                         createTransactionJ(dst_addr, payment_id, amount, mixin_count, _priority,
                                 accountIndex));
-        pendingTransaction = new PendingTransaction(txHandle);
+        pendingTransaction = new PendingTransaction(txHandle, priority == PendingTransaction.Priority.Blink);
         return pendingTransaction;
     }
 
@@ -337,7 +337,7 @@ public class Wallet {
     public PendingTransaction createSweepUnmixableTransaction() {
         disposePendingTransaction();
         long txHandle = createSweepUnmixableTransactionJ();
-        pendingTransaction = new PendingTransaction(txHandle);
+        pendingTransaction = new PendingTransaction(txHandle, false /*blink*/);
         return pendingTransaction;
     }
 
