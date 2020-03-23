@@ -1,21 +1,17 @@
 #!/bin/bash
 
-set -e
-
-build_dir=/opt/android/build
-if [ -z $1 ] ; then
-    echo "Collecting libs from ${build_dir} directory!"
-else
-    build_dir=`pwd`/tmp_build
-    rm -Rf $build_dir
-    docker cp $1:/opt/android/build $build_dir
-fi
-
-orig_path=$PATH
-packages=(boost openssl monero libsodium)
-
+packages=(boost openssl monero libsodium sqlite)
 archs=(arm arm64 x86 x86_64)
 #archs=(x86)
+
+docker container rm loki-android > /dev/null 2>&1
+
+set -e
+docker create --name loki-android loki-android-image
+
+build_dir=`pwd`/tmp_build
+rm -Rf $build_dir
+docker cp loki-android:/opt/android/build $build_dir
 
 for arch in ${archs[@]}; do
     case ${arch} in
@@ -51,9 +47,8 @@ for arch in ${archs[@]}; do
 	done
 done
 
-if [[ ! -z $1 ]] ; then
-    rm -rf $build_dir
-fi
+rm -rf $build_dir
+docker container rm loki-android
 
 exit 0
 

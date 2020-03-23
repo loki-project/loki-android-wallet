@@ -80,6 +80,7 @@ android {
 
     // Enumerate translated locales
     def availableLocales = ["en"]
+    ndkVersion = '21.0.6113669'
     new File("app/src/main/res/").eachFileMatch(~/^values-.*/) { file ->
         def languageTag = file.name.substring(7).replace("-r", "-")
         availableLocales.add(languageTag)
