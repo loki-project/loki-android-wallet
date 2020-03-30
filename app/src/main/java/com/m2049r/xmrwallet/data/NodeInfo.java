@@ -140,7 +140,7 @@ public class NodeInfo extends Node {
     }
 
     public boolean isValid() {
-        boolean versionValid = (majorVersion >= 11);
+        boolean versionValid = (majorVersion >= 14);
         return isSuccessful() && versionValid && (responseTime < Double.MAX_VALUE);
     }
 

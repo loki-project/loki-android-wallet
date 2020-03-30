@@ -357,7 +357,7 @@ public class WalletService extends Service {
                             return;
                         }
                         final String txid = pendingTransaction.getFirstTxId(); // tx ids vanish after commit()!
-                        boolean success = pendingTransaction.commit("", true);
+                        boolean success = pendingTransaction.commit("", true /*overwrite*/, pendingTransaction.blink);
                         if (success) {
                             myWallet.disposePendingTransaction();
                             if (observer != null) observer.onTransactionSent(txid);
