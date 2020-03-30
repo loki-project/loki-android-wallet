@@ -8,6 +8,15 @@ add_library( monerujo
 set(EXTERNAL_LIBS_DIR ${CMAKE_SOURCE_DIR}/../external-libs)
 
 ############
+# libsqlite
+############
+
+add_library(sqlite STATIC IMPORTED)
+set_target_properties(sqlite PROPERTIES IMPORTED_LOCATION
+        ${EXTERNAL_LIBS_DIR}/sqlite/lib/${ANDROID_ABI}/libsqlite3.a)
+
+
+############
 # libsodium
 ############
 
@@ -202,7 +211,7 @@ target_link_libraries(  monerujo
                         boost_system
                         boost_thread
                         boost_wserialization
-
+                        sqlite
                         ssl
                         crypto
 
