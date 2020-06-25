@@ -250,9 +250,6 @@ public class ExchangeView extends LinearLayout {
 
     }
 
-    final static double MAX_AMOUNT_XMR = 1000;
-    final static double MAX_AMOUNT_NOTXMR = 100000;
-
     public boolean checkEnteredAmount() {
         boolean ok = true;
         Timber.d("checkEnteredAmount");
@@ -260,13 +257,7 @@ public class ExchangeView extends LinearLayout {
         if (!amountEntry.isEmpty()) {
             try {
                 double a = Double.parseDouble(amountEntry);
-                double maxAmount = (getCurrencyA() == 0) ? MAX_AMOUNT_XMR : MAX_AMOUNT_NOTXMR;
-                if (a > (maxAmount)) {
-                    etAmount.setError(getResources().
-                            getString(R.string.receive_amount_too_big,
-                                    String.format(Locale.US, "%,.0f", maxAmount)));
-                    ok = false;
-                } else if (a < 0) {
+                if (a < 0) {
                     etAmount.setError(getResources().getString(R.string.receive_amount_negative));
                     ok = false;
                 }
