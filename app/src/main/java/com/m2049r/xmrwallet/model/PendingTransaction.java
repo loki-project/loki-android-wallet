@@ -37,18 +37,18 @@ public class PendingTransaction {
 
     public enum Priority {
         Slow(1),
-        Blink(0x626c6e6b);
+        Blink(5);
 
         public static Priority fromInteger(int n) {
-            if (n == Blink.getValue()) return Priority.Blink;
-            return Priority.Slow;
+            if (n == Slow.getValue()) return Priority.Slow;
+            return Priority.Blink;
         }
 
         public static Priority fromString(String string) {
             try {
                 return Priority.valueOf(string);
             } catch (Exception e) {
-                return Priority.Slow;
+                return Priority.Blink;
             }
         }
 

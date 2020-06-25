@@ -321,7 +321,7 @@ public class Wallet {
                                 accountIndex) :
                         createTransactionJ(dst_addr, payment_id, amount, mixin_count, _priority,
                                 accountIndex));
-        pendingTransaction = new PendingTransaction(txHandle, priority == PendingTransaction.Priority.Blink);
+        pendingTransaction = new PendingTransaction(txHandle, priority != PendingTransaction.Priority.Slow);
         return pendingTransaction;
     }
 
