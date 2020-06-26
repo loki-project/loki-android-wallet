@@ -147,17 +147,17 @@ RUN cd /opt/android/libzmq \
 
 # Building Loki from the latest commit on Android branch, this should be kept up to date with master
 # with the necessary fixes by crtlib and m2049r to build for mobile.
-# RUN cd /opt/android \
-#     && git clone -b android https://github.com/loki-project/loki.git --recursive --depth=1 \
-#     && cd loki \
-#     && mkdir -p build/release \
-#     && ./build-all-arch.sh
+ RUN cd /opt/android \
+     && git clone -b android https://github.com/loki-project/loki.git --recursive --depth=1 \
+     && cd loki \
+     && mkdir -p build/release \
+     && ./build-all-arch.sh
 
 # Uncomment this section to use loki from the docker directory if you want to
 # easily build a custom version not depending on the specified branch above and
 # comment out the section above that pulls from github.
-ADD loki /opt/android/loki
-RUN cd /opt/android/loki \
-     && rm -rf build \
-     && mkdir -p build/release \
-     && ./build-all-arch.sh
+#ADD loki /opt/android/loki
+#RUN cd /opt/android/loki \
+#     && rm -rf build \
+#     && mkdir -p build/release \
+#     && ./build-all-arch.sh

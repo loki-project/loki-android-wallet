@@ -836,7 +836,7 @@ public class WalletActivity extends BaseActivity implements WalletFragment.Liste
                         extras.putString(GenerateReviewFragment.REQUEST_TYPE, GenerateReviewFragment.VIEW_TYPE_WALLET);
 
                         if (needVerifyIdentity) {
-                            Helper.promptPassword(WalletActivity.this, getWallet().getName(), true, new Helper.PasswordAction() {
+                            Helper.promptPassword(WalletActivity.this, getWallet().getName(), false, new Helper.PasswordAction() {
                                 @Override
                                 public void action(String walletName, String password, boolean fingerprintUsed) {
                                     replaceFragment(new GenerateReviewFragment(), null, extras);
