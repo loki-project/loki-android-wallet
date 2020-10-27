@@ -304,34 +304,26 @@ public class Wallet {
     public PendingTransaction createTransaction(TxData txData) {
         return createTransaction(
                 txData.getDestinationAddress(),
-                txData.getPaymentId(),
                 txData.getAmount(),
-                txData.getMixin(),
                 txData.getPriority());
     }
 
-    public PendingTransaction createTransaction(String dst_addr, String payment_id,
-                                                long amount, int mixin_count,
+    public PendingTransaction createTransaction(String dst_addr,
+                                                long amount,
                                                 PendingTransaction.Priority priority) {
         disposePendingTransaction();
         int _priority = priority.getValue();
         long txHandle =
-                (amount == SWEEP_ALL ?
-                        createSweepTransaction(dst_addr, payment_id, mixin_count, _priority,
-                                accountIndex) :
-                        createTransactionJ(dst_addr, payment_id, amount, mixin_count, _priority,
-                                accountIndex));
+                (amount == SWEEP_ALL
+                    ? createSweepTransaction(dst_addr, _priority, accountIndex)
+                    : createTransactionJ(dst_addr, amount, _priority, accountIndex));
         pendingTransaction = new PendingTransaction(txHandle, priority != PendingTransaction.Priority.Slow);
         return pendingTransaction;
     }
 
-    private native long createTransactionJ(String dst_addr, String payment_id,
-                                           long amount, int mixin_count,
-                                           int priority, int accountIndex);
+    private native long createTransactionJ(String dst_addr, long amount, int priority, int accountIndex);
 
-    private native long createSweepTransaction(String dst_addr, String payment_id,
-                                               int mixin_count,
-                                               int priority, int accountIndex);
+    private native long createSweepTransaction(String dst_addr, int priority, int accountIndex);
 
 
     public PendingTransaction createSweepUnmixableTransaction() {
@@ -373,10 +365,6 @@ public class Wallet {
     public void setListener(WalletListener listener) {
         this.listenerHandle = setListenerJ(listener);
     }
-
-    public native int getDefaultMixin();
-
-    public native void setDefaultMixin(int mixin);
 
     public native boolean setUserNote(String txid, String note);
 
