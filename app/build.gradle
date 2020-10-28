@@ -27,13 +27,8 @@ android {
         }
         stagenet {
             dimension 'net'
-            applicationIdSuffix '.stage'
-            versionNameSuffix ' (stage)'
-        }
-        alpha {
-            dimension 'type'
-            applicationIdSuffix '.alpha'
-            versionNameSuffix ' (alpha)'
+            applicationIdSuffix '.testnet'
+            versionNameSuffix ' (testnet)'
         }
         prod {
             dimension 'type'
@@ -98,9 +93,9 @@ android {
                 //def flavor = output.getFilter(flavor)
 
                 if (abiName == null) abiName = "universal"
-                def v = "${variant.versionName}".replaceFirst(" '.*' ?", "")
+                def v = "${variant.versionName}"
                         .replace(".", "x")
-                        .replace("(", "-")
+                        .replaceFirst(" *\\(", "-")
                         .replace(")", "")
                 outputFileName = "$rootProject.ext.apkName-" + v + "_" + abiName + ".apk"
         }
