@@ -5,7 +5,7 @@
 
 
 
-set -o errexit
+set -o errexit globstar
 
 if [ -z "$SSH_KEY" ]; then
     echo -e "\n\n\n\e[31;1mUnable to upload artifact: SSH_KEY not set\e[0m"
@@ -35,7 +35,7 @@ for p in "${upload_dirs[@]}"; do
 -mkdir $dir_tmp"
 done
 
-for apk in app/build/outputs/apk/prodMainnet/release/loki-wallet-*.apk app/build/outputs/apk/prodStagenet/release/loki-wallet-*-testnet_*.apk; do
+for apk in app/build/outputs/apk/**/loki-wallet-*.apk; do
     uploadcmds="$uploadcmds
 put $apk $upload_to"
 done

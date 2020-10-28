@@ -22,7 +22,7 @@ local loki_deps_url = 'https://builds.lokinet.dev/jagerman/loki/android-build/an
                     'unzip clitools.zip -d /sdk',
                     'export ANDROID_SDK_ROOT=/sdk PATH="/sdk/cmdline-tools/bin:$PATH"',
                     'yes | sdkmanager --sdk_root=/sdk --licenses',
-                    './gradlew assembleRelease',
+                    './gradlew assemble',
                     './utils/drone-ci-upload.sh'
                     ]
             },
