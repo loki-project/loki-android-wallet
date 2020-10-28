@@ -1,7 +1,7 @@
 local apt_get_quiet = 'apt-get -o=Dpkg::Use-Pty=0 -q';
 
 // Download URL for bundled android deps build from loki-core:
-local loki_deps_url = 'https://builds.lokinet.dev/jagerman/loki/android-build/android-deps-73c98416a95a91db2c068e8eb39444cc059e652f.tar.xz';
+local loki_deps_url = 'https://builds.lokinet.dev/jagerman/loki/android-build/android-deps-a3f44c233a9c13928e9ea69eb6fc0ab43c92b3a1.tar.xz';
 
 [
     {   name: 'Android build', kind: 'pipeline', type: 'docker', platform: { arch: 'amd64' },
