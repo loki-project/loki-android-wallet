@@ -35,10 +35,10 @@ for p in "${upload_dirs[@]}"; do
 -mkdir $dir_tmp"
 done
 
-for apk in ../app/build/outputs/apk/prodMainnet/release/loki-wallet-*.apk ../app/build/outputs/apk/prodStagenet/release/loki-wallet-*-testnet_*.apk; do
+for apk in app/build/outputs/apk/prodMainnet/release/loki-wallet-*.apk app/build/outputs/apk/prodStagenet/release/loki-wallet-*-testnet_*.apk; do
     uploadcmds="$uploadcmds
 put $apk $upload_to"
-
+done
 
 sftp -i ssh_key -b - -o StrictHostKeyChecking=off drone@builds.lokinet.dev <<SFTP
 $uploadcmds
