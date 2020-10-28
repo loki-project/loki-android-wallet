@@ -5,7 +5,8 @@
 
 
 
-set -o errexit globstar
+set -o errexit
+shopt -s globstar
 
 if [ -z "$SSH_KEY" ]; then
     echo -e "\n\n\n\e[31;1mUnable to upload artifact: SSH_KEY not set\e[0m"
