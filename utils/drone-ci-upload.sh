@@ -21,13 +21,23 @@ set -o xtrace  # Don't start tracing until *after* we write the ssh key
 chmod 600 ssh_key
 
 branch_or_tag=${DRONE_BRANCH:-${DRONE_TAG:-unknown}}
+tag_or_commit=${DRONE_TAG:-${DRONE_COMMIT}}
 
-upload_to="builds.lokinet.dev/${DRONE_REPO// /_}/${branch_or_tag// /_}/${DRONE_TAG:-${DRONE_COMMIT}}"
+upload_to="builds.lokinet.dev/${DRONE_REPO// /_}/${branch_or_tag// /_}"
+upload_debug_to="${upload_to}/debug-builds"
+
+mkdir android-wallet-${tag_or_commit}
+cd android-wallet-${tag_or_commit}
+ln -s ../app/build/outputs/apk/**/release/loki-wallet-*.apk .
+cd ..
+# Just .tar without compression because the .apk's are already compressed (and a second layer of xz
+# compression on top only compressed by a further 8%, so don't bother).
+tar --dereference -cvf android-wallet-${tag_or_commit}-unsigned.tar android-wallet-${tar_or_commit}
 
 # sftp doesn't have any equivalent to mkdir -p, so we have to split the above up into a chain of
 # -mkdir a/, -mkdir a/b/, -mkdir a/b/c/, ... commands.  The leading `-` allows the command to fail
 # without error.
-upload_dirs=(${upload_to//\// })
+upload_dirs=(${upload_debug_to//\// })
 uploadcmds=
 dir_tmp=""
 for p in "${upload_dirs[@]}"; do
@@ -36,9 +46,12 @@ for p in "${upload_dirs[@]}"; do
 -mkdir $dir_tmp"
 done
 
-for apk in app/build/outputs/apk/**/loki-wallet-*.apk; do
+uploadcmds="$uploadcmds
+put android-wallet-${tag_or_commit}-unsigned.tar $upload_to"
+
+for apk in app/build/outputs/apk/**/debug/loki-wallet-*.apk; do
     uploadcmds="$uploadcmds
-put $apk $upload_to"
+put $apk $upload_debug_to"
 done
 
 sftp -i ssh_key -b - -o StrictHostKeyChecking=off drone@builds.lokinet.dev <<SFTP
