@@ -32,7 +32,7 @@ ln -s ../app/build/outputs/apk/**/release/loki-wallet-*.apk .
 cd ..
 # Just .tar without compression because the .apk's are already compressed (and a second layer of xz
 # compression on top only compressed by a further 8%, so don't bother).
-tar --dereference -cvf android-wallet-${tag_or_commit}-unsigned.tar android-wallet-${tar_or_commit}
+tar --dereference -cvf android-wallet-${tag_or_commit}-unsigned.tar android-wallet-${tag_or_commit}
 
 # sftp doesn't have any equivalent to mkdir -p, so we have to split the above up into a chain of
 # -mkdir a/, -mkdir a/b/, -mkdir a/b/c/, ... commands.  The leading `-` allows the command to fail
