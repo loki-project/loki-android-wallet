@@ -15,7 +15,7 @@ local loki_deps_url = 'https://builds.lokinet.dev/jagerman/loki/android-build/an
                     apt_get_quiet + ' update',
                     apt_get_quiet + ' install -y eatmydata',
                     'eatmydata ' + apt_get_quiet + ' dist-upgrade -y',
-                    'eatmydata ' + apt_get_quiet + ' install -y --no-install-recommends default-jre-headless curl ca-certificates tar xz-utils unzip git',
+                    'eatmydata ' + apt_get_quiet + ' install -y --no-install-recommends default-jre-headless curl ca-certificates tar xz-utils unzip git openssh-client',
                     'git fetch --tags',
                     'curl -L ' + loki_deps_url + ' | tar --transform="s#^android-deps-[^/]*#loki-core-deps#" -xvJ',
                     'curl https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip --output clitools.zip',
