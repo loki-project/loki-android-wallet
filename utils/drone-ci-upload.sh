@@ -23,33 +23,28 @@ branch_or_tag=${DRONE_BRANCH:-${DRONE_TAG:-unknown}}
 
 upload_to="builds.lokinet.dev/${DRONE_REPO// /_}/${branch_or_tag// /_}"
 
-mkdir android-wallet-${DRONE_COMMIT}
-cd android-wallet-${DRONE_COMMIT}
-ln -s ../app/build/outputs/apk/prodMainnet/release/loki-wallet-*.apk ../app/build/outputs/apk/prodStagenet/release/loki-wallet-*-testnet_*.apk .
-cd ..
-# Just .tar without compression because the .apk's are already compressed (and a second layer of xz
-# compression on top only compressed by a further 8%, so don't bother).
-tar --dereference -cvf android-wallet-${DRONE_COMMIT}.tar android-wallet-${DRONE_COMMIT}
-filename=android-wallet-${DRONE_COMMIT}.tar
-
 # sftp doesn't have any equivalent to mkdir -p, so we have to split the above up into a chain of
 # -mkdir a/, -mkdir a/b/, -mkdir a/b/c/, ... commands.  The leading `-` allows the command to fail
 # without error.
 upload_dirs=(${upload_to//\// })
-mkdirs=
+uploadcmds=
 dir_tmp=""
 for p in "${upload_dirs[@]}"; do
     dir_tmp="$dir_tmp$p/"
-    mkdirs="$mkdirs
+    uploadcmds="$uploadcmds
 -mkdir $dir_tmp"
 done
 
+for apk in ../app/build/outputs/apk/prodMainnet/release/loki-wallet-*.apk ../app/build/outputs/apk/prodStagenet/release/loki-wallet-*-testnet_*.apk; do
+    uploadcmds="$uploadcmds
+put $apk $upload_to"
+
+
 sftp -i ssh_key -b - -o StrictHostKeyChecking=off drone@builds.lokinet.dev <<SFTP
-$mkdirs
-put $filename $upload_to
+$uploadcmds
 SFTP
 
 set +o xtrace
 
-echo -e "\n\n\n\n\e[32;1mUploaded to https://${upload_to}/${filename}\e[0m\n\n\n"
+echo -e "\n\n\n\n\e[32;1mUploaded to https://${upload_to}/\e[0m\n\n\n"
 
