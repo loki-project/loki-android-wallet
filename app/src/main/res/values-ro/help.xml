@@ -111,10 +111,6 @@
         <h1>Detaliile tranzacției</h1>
         <h2>Destinație</h2>
         Aceasta este adresa publică la care tu ai trimis Loki
-        <h2>PaymentID</h2>
-        Poți utiliza un ID de plată pentru a identifica suma trimisă între două terțe,
-		acest lucru este complet opțional și privat. Ca exemplu, poate permite identificare
-		într-o activitate comercială pentru a reconcilia pentru un produs pe care l-ați achiziționat.
         <h2>TX ID</h2>
         Acesta este ID-ul Tranzacției și poate fi folosit pentru a identifica tranzacția ta obfuscată
 		pe un explorator al bazei de date distribuită (Blockchain) a Loki, ca cel

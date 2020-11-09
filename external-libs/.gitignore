@@ -1,6 +1,0 @@
-# Ignore everything in subdirectories
-/*/*
-
-# Besides docker directory
-!/docker/*
-build
